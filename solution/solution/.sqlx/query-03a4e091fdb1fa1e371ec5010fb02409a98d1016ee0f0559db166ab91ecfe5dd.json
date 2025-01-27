@@ -1,0 +1,150 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "SELECT promos.id,\n       company_id,\n       companies.name AS company_name,\n       description,\n       image_url,\n       target         AS \"target: DBTarget\",\n       max_count,\n       active_from,\n       active_until,\n       mode           AS \"mode: DBPromoMode\",\n       promo_common,\n       promo_unique,\n       like_count,\n       used_count,\n       comment_count,\n       active\nFROM promos\n         LEFT JOIN companies ON companies.id = company_id\nWHERE ((target).country IS NULL OR lower((target).country) = lower($1))\n  AND lower($2) = ANY (lower((target).categories::text)::text[])\n  and promos.active = $3\nORDER BY id DESC\nLIMIT $4 OFFSET $5\n",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 1,
+        "name": "company_id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 2,
+        "name": "company_name",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 3,
+        "name": "description",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 4,
+        "name": "image_url",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 5,
+        "name": "target: DBTarget",
+        "type_info": {
+          "Custom": {
+            "name": "target",
+            "kind": {
+              "Composite": [
+                [
+                  "age_from",
+                  "Int4"
+                ],
+                [
+                  "age_to",
+                  "Int4"
+                ],
+                [
+                  "country",
+                  "Text"
+                ],
+                [
+                  "categories",
+                  "TextArray"
+                ]
+              ]
+            }
+          }
+        }
+      },
+      {
+        "ordinal": 6,
+        "name": "max_count",
+        "type_info": "Int4"
+      },
+      {
+        "ordinal": 7,
+        "name": "active_from",
+        "type_info": "Timestamptz"
+      },
+      {
+        "ordinal": 8,
+        "name": "active_until",
+        "type_info": "Timestamptz"
+      },
+      {
+        "ordinal": 9,
+        "name": "mode: DBPromoMode",
+        "type_info": {
+          "Custom": {
+            "name": "promo_mode",
+            "kind": {
+              "Enum": [
+                "COMMON",
+                "UNIQUE"
+              ]
+            }
+          }
+        }
+      },
+      {
+        "ordinal": 10,
+        "name": "promo_common",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 11,
+        "name": "promo_unique",
+        "type_info": "TextArray"
+      },
+      {
+        "ordinal": 12,
+        "name": "like_count",
+        "type_info": "Int4"
+      },
+      {
+        "ordinal": 13,
+        "name": "used_count",
+        "type_info": "Int4"
+      },
+      {
+        "ordinal": 14,
+        "name": "comment_count",
+        "type_info": "Int4"
+      },
+      {
+        "ordinal": 15,
+        "name": "active",
+        "type_info": "Bool"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Text",
+        "Text",
+        "Bool",
+        "Int8",
+        "Int8"
+      ]
+    },
+    "nullable": [
+      false,
+      false,
+      false,
+      false,
+      true,
+      false,
+      false,
+      false,
+      false,
+      false,
+      true,
+      false,
+      false,
+      false,
+      false,
+      false
+    ]
+  },
+  "hash": "03a4e091fdb1fa1e371ec5010fb02409a98d1016ee0f0559db166ab91ecfe5dd"
+}

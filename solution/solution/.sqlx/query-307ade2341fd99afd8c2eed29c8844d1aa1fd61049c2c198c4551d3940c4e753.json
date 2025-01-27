@@ -1,0 +1,68 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "WITH inserted_comment AS (\n    INSERT INTO comments (id, author_id, promo_id, text, date)\n        VALUES ($1, $2, $3, $4, $5)\n        RETURNING *)\nSELECT inserted_comment.id,\n       author_id,\n       promo_id,\n       text,\n       date,\n       users.name       AS author_name,\n       users.surname    AS author_surname,\n       users.avatar_url AS author_avatar_url\nFROM inserted_comment\n         LEFT JOIN users ON users.id = author_id",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 1,
+        "name": "author_id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 2,
+        "name": "promo_id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 3,
+        "name": "text",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 4,
+        "name": "date",
+        "type_info": "Timestamptz"
+      },
+      {
+        "ordinal": 5,
+        "name": "author_name",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 6,
+        "name": "author_surname",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 7,
+        "name": "author_avatar_url",
+        "type_info": "Text"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Uuid",
+        "Uuid",
+        "Text",
+        "Timestamptz"
+      ]
+    },
+    "nullable": [
+      false,
+      false,
+      false,
+      false,
+      false,
+      true,
+      true,
+      true
+    ]
+  },
+  "hash": "307ade2341fd99afd8c2eed29c8844d1aa1fd61049c2c198c4551d3940c4e753"
+}

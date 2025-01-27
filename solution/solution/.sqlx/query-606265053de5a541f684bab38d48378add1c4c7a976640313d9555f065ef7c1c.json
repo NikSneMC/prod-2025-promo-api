@@ -1,0 +1,78 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "UPDATE users\nSET name          = COALESCE($2, name),\n    surname       = COALESCE($3, surname),\n    avatar_url    = COALESCE($4, avatar_url),\n    password_hash = COALESCE($5, password_hash)\nWHERE id = $1\nRETURNING id, name, surname, email, avatar_url, other AS \"other: DBUserTargetSettings\", password_hash",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 1,
+        "name": "name",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 2,
+        "name": "surname",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 3,
+        "name": "email",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 4,
+        "name": "avatar_url",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 5,
+        "name": "other: DBUserTargetSettings",
+        "type_info": {
+          "Custom": {
+            "name": "user_target_settings",
+            "kind": {
+              "Composite": [
+                [
+                  "age",
+                  "Int4"
+                ],
+                [
+                  "country",
+                  "Text"
+                ]
+              ]
+            }
+          }
+        }
+      },
+      {
+        "ordinal": 6,
+        "name": "password_hash",
+        "type_info": "Text"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Text",
+        "Text",
+        "Text",
+        "Text"
+      ]
+    },
+    "nullable": [
+      false,
+      false,
+      false,
+      false,
+      true,
+      false,
+      false
+    ]
+  },
+  "hash": "606265053de5a541f684bab38d48378add1c4c7a976640313d9555f065ef7c1c"
+}

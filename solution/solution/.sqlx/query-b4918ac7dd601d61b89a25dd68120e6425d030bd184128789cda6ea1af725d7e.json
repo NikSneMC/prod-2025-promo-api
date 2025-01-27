@@ -1,0 +1,65 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "WITH updated_comment AS (\n    UPDATE comments\n        SET\n            text = $2\n        WHERE id = $1\n        RETURNING *)\nSELECT updated_comment.id,\n       author_id,\n       promo_id,\n       text,\n       date,\n       users.name       AS author_name,\n       users.surname    AS author_surname,\n       users.avatar_url AS author_avatar_url\nFROM updated_comment\n         LEFT JOIN users ON users.id = author_id",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 1,
+        "name": "author_id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 2,
+        "name": "promo_id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 3,
+        "name": "text",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 4,
+        "name": "date",
+        "type_info": "Timestamptz"
+      },
+      {
+        "ordinal": 5,
+        "name": "author_name",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 6,
+        "name": "author_surname",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 7,
+        "name": "author_avatar_url",
+        "type_info": "Text"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Text"
+      ]
+    },
+    "nullable": [
+      false,
+      false,
+      false,
+      false,
+      false,
+      true,
+      true,
+      true
+    ]
+  },
+  "hash": "b4918ac7dd601d61b89a25dd68120e6425d030bd184128789cda6ea1af725d7e"
+}

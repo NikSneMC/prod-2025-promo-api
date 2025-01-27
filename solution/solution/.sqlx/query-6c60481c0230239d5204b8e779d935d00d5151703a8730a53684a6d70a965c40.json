@@ -1,0 +1,23 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "SELECT count(*)\nFROM promos\nWHERE ((target).country IS NULL OR lower((target).country) = lower($1))\n  AND $2 = promos.active\n",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "count",
+        "type_info": "Int8"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Text",
+        "Bool"
+      ]
+    },
+    "nullable": [
+      null
+    ]
+  },
+  "hash": "6c60481c0230239d5204b8e779d935d00d5151703a8730a53684a6d70a965c40"
+}

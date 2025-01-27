@@ -1,0 +1,47 @@
+services:
+  postgres_db:
+    image: postgres:alpine
+    restart: on-failure
+    volumes:
+      - db-data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_DB: promo-code-backend-prod
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
+      POSTGRES_HOST_AUTH_METHOD: trust
+  redis:
+    image: redis:alpine
+    restart: on-failure
+    volumes:
+      - redis-data:/data
+  antifraud:
+    image: lodthe/prod-backend-antifraud:latest
+    restart: on-failure
+  solution:
+    build:
+      context: ./solution
+      dockerfile: Dockerfile
+    ports:
+      - "8080:8080"
+    depends_on:
+      - postgres_db
+      - redis
+      - antifraud
+    environment:
+      RUST_LOG: info
+      SERVER_ADDRESS: "0.0.0.0:8080"
+      POSTGRES_CONN: "postgres://postgres:postgres@postgres_db:5432/promo-code-backend-prod"
+      REDIS_HOST: "redis"
+      REDIS_PORT: "6379"
+      ANTIFRAUD_ADDRESS: "antifraud:9090"
+  tunnel:
+    image: cloudflare/cloudflared:latest
+    restart: always
+    command: tunnel --no-autoupdate run
+    environment:
+      TUNNEL_TOKEN: ${CLOUDFLARED_TOKEN}
+    depends_on:
+      - solution
+volumes:
+  db-data:
+  redis-data:

@@ -1,0 +1,96 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "INSERT INTO users (id, name, surname, email, avatar_url, other, password_hash)\nVALUES ($1, $2, $3, $4, $5, $6, $7)\nRETURNING id, name, surname, email, avatar_url, other AS \"other: DBUserTargetSettings\", password_hash",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 1,
+        "name": "name",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 2,
+        "name": "surname",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 3,
+        "name": "email",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 4,
+        "name": "avatar_url",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 5,
+        "name": "other: DBUserTargetSettings",
+        "type_info": {
+          "Custom": {
+            "name": "user_target_settings",
+            "kind": {
+              "Composite": [
+                [
+                  "age",
+                  "Int4"
+                ],
+                [
+                  "country",
+                  "Text"
+                ]
+              ]
+            }
+          }
+        }
+      },
+      {
+        "ordinal": 6,
+        "name": "password_hash",
+        "type_info": "Text"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Text",
+        "Text",
+        "Text",
+        "Text",
+        {
+          "Custom": {
+            "name": "user_target_settings",
+            "kind": {
+              "Composite": [
+                [
+                  "age",
+                  "Int4"
+                ],
+                [
+                  "country",
+                  "Text"
+                ]
+              ]
+            }
+          }
+        },
+        "Text"
+      ]
+    },
+    "nullable": [
+      false,
+      false,
+      false,
+      false,
+      true,
+      false,
+      false
+    ]
+  },
+  "hash": "fd2de84d4b855472791ff7ca321241501c581b2c4d26db36a2fdc2f665d6b61d"
+}

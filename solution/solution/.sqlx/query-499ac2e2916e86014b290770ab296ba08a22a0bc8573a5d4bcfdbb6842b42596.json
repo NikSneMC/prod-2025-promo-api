@@ -1,0 +1,65 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "SELECT comments.id,\n       author_id,\n       promo_id,\n       text,\n       date,\n       users.name       AS author_name,\n       users.surname    AS author_surname,\n       users.avatar_url AS author_avatar_url\nFROM comments\n         LEFT JOIN users ON users.id = author_id\nWHERE comments.promo_id = $1\n  AND comments.id = $2",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 1,
+        "name": "author_id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 2,
+        "name": "promo_id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 3,
+        "name": "text",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 4,
+        "name": "date",
+        "type_info": "Timestamptz"
+      },
+      {
+        "ordinal": 5,
+        "name": "author_name",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 6,
+        "name": "author_surname",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 7,
+        "name": "author_avatar_url",
+        "type_info": "Text"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Uuid"
+      ]
+    },
+    "nullable": [
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      true
+    ]
+  },
+  "hash": "499ac2e2916e86014b290770ab296ba08a22a0bc8573a5d4bcfdbb6842b42596"
+}

@@ -1,0 +1,17 @@
+DROP TABLE IF EXISTS comments;
+
+DROP TABLE IF EXISTS activations;
+
+DROP TABLE IF EXISTS likes;
+
+DROP TABLE IF EXISTS users;
+
+DROP TYPE IF EXISTS user_target_settings;
+
+DROP TABLE IF EXISTS promos;
+
+DROP TYPE IF EXISTS promo_mode;
+
+DROP TYPE IF EXISTS target;
+
+DROP TABLE IF EXISTS companies;

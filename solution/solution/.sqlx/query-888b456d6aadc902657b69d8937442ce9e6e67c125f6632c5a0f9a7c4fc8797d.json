@@ -1,0 +1,42 @@
+{
+  "db_name": "PostgreSQL",
+  "query": "WITH unique_promo AS (\n    UPDATE promos\n        SET used_count = used_count + 1\n        WHERE id = $2\n        RETURNING promos.promo_unique[used_count] AS promo\n)\nINSERT INTO activations (user_id, promo_id, promo, date)\nVALUES ($1, $2, (SELECT promo FROM unique_promo), $3)\nRETURNING *",
+  "describe": {
+    "columns": [
+      {
+        "ordinal": 0,
+        "name": "user_id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 1,
+        "name": "promo_id",
+        "type_info": "Uuid"
+      },
+      {
+        "ordinal": 2,
+        "name": "promo",
+        "type_info": "Text"
+      },
+      {
+        "ordinal": 3,
+        "name": "date",
+        "type_info": "Timestamptz"
+      }
+    ],
+    "parameters": {
+      "Left": [
+        "Uuid",
+        "Uuid",
+        "Timestamptz"
+      ]
+    },
+    "nullable": [
+      false,
+      false,
+      false,
+      false
+    ]
+  },
+  "hash": "888b456d6aadc902657b69d8937442ce9e6e67c125f6632c5a0f9a7c4fc8797d"
+}
